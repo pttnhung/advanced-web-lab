@@ -19,25 +19,30 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function store(Request $request, CartService $cart): RedirectResponse
-    {
-        $validated = $request->validate([
-            'full_name' => 'required|string',
-            'phone_number' => 'required|string',
-            'email' => 'required|email',
-            'shipping_address' => 'required',
-            'coupon_code' => 'nullable|string',
-            'notes' => 'nullable|string',
-        ]);
+   public function store(Request $request, CartService $cart): RedirectResponse
+{
+    $validated = $request->validate([
+        'full_name' => 'required|string',
+        'phone_number' => 'required|string',
+        'email' => 'required|email',
+        'shipping_address' => 'required',
+        'coupon_code' => 'nullable|string',
+        'notes' => 'nullable|string',
+    ]);
 
-        $order = $cart->getCart()->order()->save(
-            Order::factory()->make($validated)
-        );
+    // lấy cart
+    $cartModel = $cart->getCart();
 
-                OrderCreated::dispatch($order);
-        
-        return redirect(URL::signedRoute('orders.complete', [ 'order' => $order->id ]));
-    }
+    // IMPORTANT: sử dụng cart đó, không gọi getCart() lại!
+    $order = $cartModel->order()->save(
+        Order::factory()->make($validated)
+    );
+
+    OrderCreated::dispatch($order);
+
+    return redirect(URL::signedRoute('orders.complete', [ 'order' => $order->id ]));
+}
+
 
     public function show(Request $request, Order $order)
     {

@@ -20,6 +20,13 @@ class Order extends Model
     {
         return URL::signedRoute('checkout.show', ['order' => $this->id]);
     }
+    public function routeNotificationForMail()
+{
+    return [$this->email => null];
+}
+
+
+    
 }
 
 

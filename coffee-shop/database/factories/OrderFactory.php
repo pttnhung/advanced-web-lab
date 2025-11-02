@@ -11,11 +11,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class OrderFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
@@ -23,9 +18,9 @@ class OrderFactory extends Factory
             'code' => fake()->numerify('OR-#########'),
             'full_name' => fake()->name(),
             'phone_number' => fake()->phoneNumber(),
-            'email' => fake()->email(),
+            'email' => fake()->safeEmail(),
             'shipping_address' => fake()->streetAddress() . ', ' . fake()->city(),
-            'notes' => fake()->paragraph(1),
+            'notes' => fake()->text(100),
         ];
     }
 }

@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Cart;
+use App\Services\UserService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cart>
+ * @extends Factory<Cart>
  */
 class CartFactory extends Factory
 {
@@ -17,7 +19,7 @@ class CartFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => UserService::getUserIdFromSession(),
         ];
     }
 }

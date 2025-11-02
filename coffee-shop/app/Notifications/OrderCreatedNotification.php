@@ -44,4 +44,5 @@ class OrderCreatedNotification extends Notification
             ->action('See Order Confirmation', $this->order->getCheckoutConfirmtionPath())
             ->line('Thank you for using our application!');
     }
+    
 }
